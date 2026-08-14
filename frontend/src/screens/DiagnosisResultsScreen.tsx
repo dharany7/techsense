@@ -13,6 +13,7 @@ interface LocationState {
   symptom?: string
   answers?: Record<string, string>
   questionsAsked?: string[]
+  questions?: import('../models/types').ClarifyingQuestion[]
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -253,11 +254,14 @@ export default function DiagnosisResultsScreen() {
   useEffect(() => {
     let cancelled = false
 
-    diagnosticService.getDiagnosis(answers).then((res) => {
+    // Pass symptom so the real service can POST it to /symptoms/diagnose
+    diagnosticService.getDiagnosis(answers, state?.symptom ?? '').then((res) => {
       if (!cancelled) {
         setResults(res.sort((a, b) => a.rank - b.rank))
         setLoading(false)
       }
+    }).catch(() => {
+      if (!cancelled) setLoading(false)
     })
 
     return () => { cancelled = true }
@@ -354,6 +358,9 @@ export default function DiagnosisResultsScreen() {
                         state: {
                           symptom: state?.symptom,
                           questionsAsked: state?.questionsAsked,
+                          // Pass the full top result object so EscalationScreen
+                          // can forward it to generateEscalationBrief
+                          topDiagnosisResult: top,
                           topDiagnosis: top?.causeTitle,
                           confidenceScore: topConfidence,
                         },

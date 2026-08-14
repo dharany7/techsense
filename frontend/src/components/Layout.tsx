@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Stethoscope } from 'lucide-react'
+import Toast from './Toast'
 
 // ─── Step map ─────────────────────────────────────────────────────────────────
 const STEPS = [
@@ -157,10 +158,11 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
   )
 }
 
-// ─── Layout ────────────────────────────────────────────────────────────────────
+// ─── Layout ──────────────────────────────────────────────────────────────────────────────
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <Toast />
       <NavBar />
       {/* Flex-1 so content fills remaining height; overflow-hidden so inner
           screens can manage their own scroll independently */}

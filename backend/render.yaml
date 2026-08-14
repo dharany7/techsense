@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: techsense-api
+    runtime: python
+    pythonVersion: "3.11"         # explicit Python version for Render
+    # Render auto-detects requirements.txt and installs it before starting.
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    plan: free          # upgrade to starter/standard for always-on
+    envVars:
+      - key: FRONTEND_ORIGIN
+        value: https://your-frontend.vercel.app   # ← update after deploying the frontend
+      - key: PRODUCTION_ORIGIN
+        value: https://your-frontend.vercel.app   # ← same as FRONTEND_ORIGIN (used for CORS dedup)
+      - key: EXTRA_FRONTEND_ORIGINS
+        value: ""                                  # comma-separated extra origins if needed
+      - key: DATABASE_URL
+        value: sqlite:///./tech_sense.db           # persisted on Render disk or swap for Postgres
+      # GEMINI_API_KEY — set this as a secret in the Render dashboard, NOT here
+      # - key: GEMINI_API_KEY
+      #   value: ...
+    # Optional: mount a persistent disk so the SQLite DB survives redeploys
+    # disk:
+    #   name: techsense-data
+    #   mountPath: /opt/render/project/src
+    #   sizeGB: 1

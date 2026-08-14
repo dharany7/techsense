@@ -1,0 +1,522 @@
+{
+  "faults": [
+    {
+      "id": "door_not_closing",
+      "symptom": "door not closing",
+      "symptom_keywords": [
+        "door",
+        "not closing",
+        "won't close",
+        "door open",
+        "door stuck open",
+        "door fault"
+      ],
+      "causes": [
+        {
+          "id": "door_sensor_obstruction",
+          "label": "Door sensor obstruction or misalignment",
+          "confidence": 0.88,
+          "fix_steps": [
+            "Inspect door light curtain / safety edge for physical obstructions (debris, worn rubber strips).",
+            "Clean the sensor lens with a dry lint-free cloth.",
+            "Check sensor alignment — both transmitter and receiver must face each other within ±2 mm.",
+            "Use a multimeter to verify the sensor output signal (expect 24 V DC when clear).",
+            "Replace door light curtain module if signal is absent after cleaning and alignment."
+          ],
+          "required_parts": [
+            "Door light curtain / multi-beam safety sensor",
+            "Sensor mounting bracket",
+            "M4 mounting screws (4×)"
+          ]
+        },
+        {
+          "id": "door_motor_failure",
+          "label": "Door operator motor or drive belt failure",
+          "confidence": 0.72,
+          "fix_steps": [
+            "Power down the elevator at the main disconnect.",
+            "Manually open the door and inspect the drive belt for cracks, slack, or breakage.",
+            "Check the motor coupling for wear or play.",
+            "Measure motor winding resistance (expected 8-12 O per phase for VVVF motors).",
+            "Replace belt or motor as indicated; recalibrate door travel limits after replacement."
+          ],
+          "required_parts": [
+            "Door operator drive belt (model-specific)",
+            "Door motor (VVVF 120 W)",
+            "Motor coupling",
+            "Belt tensioner pulley"
+          ]
+        },
+        {
+          "id": "door_controller_fault",
+          "label": "Door controller board malfunction",
+          "confidence": 0.61,
+          "fix_steps": [
+            "Check door controller board LEDs for fault indicators.",
+            "Inspect ribbon cable and connector pins for corrosion or loose fit.",
+            "Perform door controller soft reset (refer to OEM service menu).",
+            "Update door controller firmware if a newer version is available.",
+            "Replace door controller board if fault persists after reset."
+          ],
+          "required_parts": [
+            "Door controller PCB (OEM replacement)",
+            "Ribbon cable assembly",
+            "Controller board fuse (5 A, 250 V)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cabin_jerking",
+      "symptom": "cabin jerking",
+      "symptom_keywords": [
+        "jerk",
+        "jerking",
+        "rough ride",
+        "jolting",
+        "bumpy",
+        "vibration",
+        "shuddering",
+        "unsmooth"
+      ],
+      "causes": [
+        {
+          "id": "guide_rail_lubrication",
+          "label": "Insufficient guide rail lubrication",
+          "confidence": 0.85,
+          "fix_steps": [
+            "Inspect guide rail surfaces for dryness, rust streaks, or uneven grease distribution.",
+            "Clean rails with a rag dampened with mineral spirits to remove old/hardened grease.",
+            "Apply fresh SAE 30 elevator guide rail oil using a brush or auto-lube system.",
+            "Check and refill the auto-lubricator reservoir if fitted.",
+            "Run the cabin 10 full cycles to distribute lubricant; observe for improvement."
+          ],
+          "required_parts": [
+            "SAE 30 guide rail lubricant (5 L)",
+            "Lubrication felt pad set",
+            "Auto-lubricator reservoir (if applicable)"
+          ]
+        },
+        {
+          "id": "vvvf_drive_parameter",
+          "label": "VVVF inverter drive parameter mismatch",
+          "confidence": 0.78,
+          "fix_steps": [
+            "Connect a laptop to the drive serial port and read current parameter set.",
+            "Compare acceleration/deceleration ramp rates with OEM specification sheet.",
+            "Adjust S-curve parameters (acceleration jerk rate) — reduce jerk rate by 10% increments until smooth.",
+            "Check motor encoder feedback signal for noise or missed pulses (scope the ABZ channels).",
+            "Re-tune PI speed controller gains if ride quality does not improve after ramp adjustment."
+          ],
+          "required_parts": [
+            "VVVF drive programming cable",
+            "Encoder signal cable (shielded, if replacing)",
+            "Drive parameter backup card"
+          ]
+        },
+        {
+          "id": "worn_roller_guides",
+          "label": "Worn or damaged car roller guides",
+          "confidence": 0.65,
+          "fix_steps": [
+            "Visually inspect all four roller guide assemblies for flat spots, cracks, or out-of-round rollers.",
+            "Apply hand pressure to each roller and check for radial play greater than 0.5 mm.",
+            "Replace worn rollers with OEM-spec polyurethane rollers.",
+            "Adjust roller guide spring tension to manufacturer specification after replacement.",
+            "Lubricate roller axles with bearing grease and confirm smooth rotation."
+          ],
+          "required_parts": [
+            "Polyurethane roller guides (set of 4)",
+            "Roller axle bearings",
+            "Guide adjustment shims",
+            "Bearing grease (lithium complex, NLGI 2)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error_code_E14",
+      "symptom": "error code E14",
+      "symptom_keywords": [
+        "E14",
+        "error 14",
+        "e14",
+        "motor overheat",
+        "thermal fault",
+        "drive overheat"
+      ],
+      "causes": [
+        {
+          "id": "motor_thermal_overload",
+          "label": "Motor thermal overload — PTC thermistor triggered",
+          "confidence": 0.92,
+          "fix_steps": [
+            "Allow motor to cool for at least 30 minutes with the shaft ventilation fan running.",
+            "Check PTC thermistor resistance: should be < 1.5 kO at ambient; > 4 kO indicates trip.",
+            "Inspect motor ventilation openings for dust blockage; blow out with compressed air.",
+            "Verify that the motor is not undersized for the actual load (check duty cycle logs).",
+            "Reset E14 via the drive service menu once motor temperature drops below threshold."
+          ],
+          "required_parts": [
+            "PTC thermistor (Klixon 130°C rated, if replacing)",
+            "Motor cooling fan (axial, 24 V DC)",
+            "Thermal paste (for motor frame cooling)"
+          ]
+        },
+        {
+          "id": "drive_heatsink_clogged",
+          "label": "Drive heatsink / cooling fan blocked",
+          "confidence": 0.74,
+          "fix_steps": [
+            "Power down the drive and remove the front cover.",
+            "Inspect the drive heatsink fins and internal fan for dust accumulation.",
+            "Use compressed air to clean all fins and vents thoroughly.",
+            "Check the cooling fan spins freely and is not seized.",
+            "Replace the drive cooling fan if it does not run on power-up."
+          ],
+          "required_parts": [
+            "Drive cooling fan (OEM replacement, 48 V DC or 120 V AC as applicable)",
+            "Thermal interface pad",
+            "Compressed air canister"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error_code_E22",
+      "symptom": "error code E22",
+      "symptom_keywords": [
+        "E22",
+        "error 22",
+        "e22",
+        "encoder fault",
+        "speed feedback",
+        "encoder signal loss"
+      ],
+      "causes": [
+        {
+          "id": "encoder_cable_fault",
+          "label": "Encoder cable damaged or loose connection",
+          "confidence": 0.89,
+          "fix_steps": [
+            "Power down drive and inspect encoder cable for cuts, kinks, or pinch points along the full run.",
+            "Reseat the encoder connector on both the motor end and the drive PG card end.",
+            "Measure encoder supply voltage at motor terminal (expect 5 V ±5% or 12 V ±10%).",
+            "Scope the A/B channels for clean square wave pulses without noise spikes.",
+            "Replace cable with shielded twisted-pair if signal quality is poor; ground the shield at one end only."
+          ],
+          "required_parts": [
+            "Shielded encoder cable (5-core, 0.5 mm², per metre)",
+            "Encoder connector kit (D-sub 9-pin or M12, per OEM)",
+            "Ferrite bead suppressor"
+          ]
+        },
+        {
+          "id": "encoder_disk_contamination",
+          "label": "Encoder optical disk contaminated or damaged",
+          "confidence": 0.67,
+          "fix_steps": [
+            "Remove encoder cover (motor end) and inspect the glass/plastic encoder disk.",
+            "Carefully wipe the disk with isopropyl alcohol (99%) and a lint-free swab.",
+            "Check for cracks or chips in the disk; replace the complete encoder if found.",
+            "Verify encoder pulse count per revolution matches drive configuration (e.g. 1024 PPR).",
+            "Re-tune drive speed feedback after encoder replacement."
+          ],
+          "required_parts": [
+            "Incremental rotary encoder (1024 PPR, OEM-matched)",
+            "Isopropyl alcohol wipes",
+            "Encoder mounting screws (M3)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error_code_E30",
+      "symptom": "error code E30",
+      "symptom_keywords": [
+        "E30",
+        "error 30",
+        "e30",
+        "safety circuit",
+        "safety chain open",
+        "safety relay fault"
+      ],
+      "causes": [
+        {
+          "id": "safety_circuit_open",
+          "label": "Safety chain open — contact not made in safety circuit",
+          "confidence": 0.94,
+          "fix_steps": [
+            "Enter inspection mode and use the safety circuit test function to identify the open contact.",
+            "Walk the entire safety chain: pit stop switch, overspeed governor, buffer switch, door locks, final limit switches.",
+            "With a multimeter set to DC volts, probe across each safety contact in sequence to find the open one.",
+            "Inspect the faulty contact for mechanical damage, corrosion, or misalignment.",
+            "Clean contacts with contact cleaner spray or replace the defective safety switch."
+          ],
+          "required_parts": [
+            "Safety switch (specific to identified contact — door lock, pit stop, or limit switch)",
+            "Contact cleaning spray (DeoxIT D5 or equivalent)",
+            "Safety relay module (if relay coil failed)"
+          ]
+        },
+        {
+          "id": "safety_relay_weld",
+          "label": "Safety relay contacts welded or coil failed",
+          "confidence": 0.58,
+          "fix_steps": [
+            "Inspect safety relay coil resistance (typical 200-500 O; open winding = coil failure).",
+            "Check for contact weld by measuring continuity in the de-energised state.",
+            "Replace the safety relay module with a certified dual-channel safety relay (EN 81 compliant).",
+            "After replacement, perform a full safety chain test cycle and log the result.",
+            "Update maintenance record and schedule quarterly safety contact inspections."
+          ],
+          "required_parts": [
+            "Dual-channel safety relay (EN 81-20 compliant)",
+            "DIN rail mounting bracket",
+            "Relay test connector (for loop-back testing)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unusual_noise",
+      "symptom": "unusual noise",
+      "symptom_keywords": [
+        "noise",
+        "grinding",
+        "squealing",
+        "banging",
+        "knocking",
+        "rubbing",
+        "scraping",
+        "squeaking",
+        "loud",
+        "clunking"
+      ],
+      "causes": [
+        {
+          "id": "worn_brake_linings",
+          "label": "Worn or contaminated brake linings",
+          "confidence": 0.82,
+          "fix_steps": [
+            "With the car at the lowest landing and power OFF, access the motor brake assembly.",
+            "Measure brake lining thickness — replace if below minimum (typically 3 mm).",
+            "Inspect lining surface for oil contamination; if present, identify and fix the oil leak source.",
+            "Clean the brake drum/disk with brake cleaner spray if contaminated but not below minimum thickness.",
+            "Adjust brake air gap per OEM specification after any lining or spring work."
+          ],
+          "required_parts": [
+            "Brake lining set (OEM-matched friction material)",
+            "Brake spring (if fatigued)",
+            "Brake cleaner spray",
+            "Go/no-go feeler gauge set"
+          ]
+        },
+        {
+          "id": "sheave_groove_wear",
+          "label": "Drive sheave groove wear causing rope slippage",
+          "confidence": 0.71,
+          "fix_steps": [
+            "Inspect sheave grooves for uneven wear, cracking, or bottoming of ropes.",
+            "Use a sheave gauge tool to measure groove diameter and profile.",
+            "If groove depth variance exceeds 1 mm between grooves, re-machine or replace the sheave.",
+            "Check all hoist ropes for wear, broken wires, and proper tension.",
+            "Re-tension ropes to equal tension within ±5% after sheave work."
+          ],
+          "required_parts": [
+            "Sheave groove gauge set",
+            "Hoist rope set (6×19 or 8×19 construction, OEM-spec diameter)",
+            "Rope tension meter",
+            "Sheave (if requiring replacement)"
+          ]
+        },
+        {
+          "id": "buffer_spring_contact",
+          "label": "Cabin contacting pit buffer spring prematurely",
+          "confidence": 0.49,
+          "fix_steps": [
+            "Ride the cabin to the lowest landing and measure compressed clearance above the buffer.",
+            "Check if bottom final limit switch is tripping early by recording the exact trigger position.",
+            "Adjust final limit switch cam or position per OEM specification.",
+            "Inspect buffer spring for corrosion, deformation, or incorrect type.",
+            "Re-run full load test and record stopping position."
+          ],
+          "required_parts": [
+            "Final limit switch cam adjuster kit",
+            "Pit buffer spring (OEM type — oil or spring buffer, per speed class)",
+            "Limit switch (if micro-switch worn)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "overshoot_undershoot",
+      "symptom": "leveling overshoot or undershoot",
+      "symptom_keywords": [
+        "overshoot",
+        "undershoot",
+        "leveling",
+        "floor gap",
+        "missed floor",
+        "stopping too high",
+        "stopping too low",
+        "landing accuracy"
+      ],
+      "causes": [
+        {
+          "id": "leveling_sensor_misalignment",
+          "label": "Floor leveling sensor / vane misalignment",
+          "confidence": 0.87,
+          "fix_steps": [
+            "In inspection mode, slowly pass the cabin through each floor and observe leveling sensor LEDs.",
+            "Measure the vertical distance from door sill to floor sill at each landing — record deviation.",
+            "Adjust the leveling vane position in the shaft (up/down) within ±3 mm.",
+            "On microprocessor-controlled systems, use the drive service menu to adjust leveling speed.",
+            "Run 5 full-load trips and verify sill-to-sill gap is within ±5 mm at all landings."
+          ],
+          "required_parts": [
+            "Leveling sensor (proximity or reed switch, OEM-matched)",
+            "Leveling vane (stainless steel, 150 mm width)",
+            "Vane bracket and M8 adjustment bolts"
+          ]
+        },
+        {
+          "id": "deceleration_ramp_misconfiguration",
+          "label": "Drive deceleration ramp too aggressive or too slow",
+          "confidence": 0.73,
+          "fix_steps": [
+            "Connect the drive programming tool and navigate to the deceleration distance parameters.",
+            "Record the current deceleration distance and compare to installation report baseline.",
+            "Increase deceleration distance by 50 mm increments if undershooting.",
+            "Decrease deceleration distance by 50 mm increments if overshooting.",
+            "Verify changes across all floors at full load and minimum load conditions."
+          ],
+          "required_parts": [
+            "Drive programming interface cable",
+            "Drive parameter backup module"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "power_failure_recovery",
+      "symptom": "power failure recovery issues",
+      "symptom_keywords": [
+        "power failure",
+        "power cut",
+        "recovery",
+        "ARD",
+        "automatic rescue device",
+        "won't restart",
+        "stuck after power",
+        "UPS fault",
+        "emergency power"
+      ],
+      "causes": [
+        {
+          "id": "ard_battery_depleted",
+          "label": "Automatic Rescue Device (ARD) battery depleted or failed",
+          "confidence": 0.91,
+          "fix_steps": [
+            "Locate the ARD / UPS module in the machine room or control cabinet.",
+            "Check the battery status LED — red or amber fault indicator confirms battery failure.",
+            "Measure battery terminal voltage under load: SLA 24 V system should hold > 21 V under 5 A draw.",
+            "Replace sealed lead-acid or Li-ion battery pack with OEM-specified capacity.",
+            "Initiate a manual ARD test cycle per EN 81-20 §5.12.1.5 and log the result."
+          ],
+          "required_parts": [
+            "SLA battery pack (24 V / 7 Ah or 12 Ah, OEM-rated)",
+            "Battery charge controller (if replacing ARD unit)",
+            "Battery cable lugs and heat-shrink",
+            "ARD module (complete, if board-level repair is not practical)"
+          ]
+        },
+        {
+          "id": "power_restoration_contactor_fault",
+          "label": "Main line contactor not re-engaging on power restoration",
+          "confidence": 0.68,
+          "fix_steps": [
+            "On power restoration, listen for the main contactor closing — silence indicates a fault.",
+            "Check the control circuit fuse (typically 6 A or 10 A) on the main board.",
+            "Measure coil voltage of the main contactor (should equal the control circuit voltage).",
+            "Inspect contactor contacts for pitting or welding; replace if contact resistance > 0.1 O.",
+            "Check the phase sequence relay — mis-wired phase order after restoration can inhibit closing."
+          ],
+          "required_parts": [
+            "Main line contactor (rated for motor FLA × 1.25)",
+            "Control circuit fuse (6 A or 10 A glass fuse, 500 V rated)",
+            "Phase sequence relay",
+            "Contactor coil (if coil-only replacement is possible)"
+          ]
+        },
+        {
+          "id": "control_board_ram_corruption",
+          "label": "Controller board RAM / NV-RAM corruption after power loss",
+          "confidence": 0.54,
+          "fix_steps": [
+            "Perform a cold restart: power OFF for 60 seconds, then power ON and observe initialisation.",
+            "If the controller displays a checksum or memory error code, backup current parameters.",
+            "Restore factory defaults and re-enter site-specific parameters from the installation record.",
+            "Install a surge protector / UPS on the controller circuit to prevent future corruption.",
+            "If the problem recurs, replace the controller board NVRAM chip or the full controller board."
+          ],
+          "required_parts": [
+            "NVRAM chip (EEPROM / battery-backed SRAM, part number per controller)",
+            "Controller board (full, if chip replacement is not viable)",
+            "Surge protection device (DIN rail mounted, SPD Type 2)",
+            "UPS module for controller circuit (500 VA minimum)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cabin_overload",
+      "symptom": "cabin overload alarm",
+      "symptom_keywords": [
+        "overload",
+        "overload alarm",
+        "too heavy",
+        "load sensor",
+        "weighing device",
+        "capacity exceeded"
+      ],
+      "causes": [
+        {
+          "id": "load_cell_calibration_drift",
+          "label": "Load cell / weighing device calibration drift",
+          "confidence": 0.86,
+          "fix_steps": [
+            "Place the cabin empty and zero the load cell via the drive/controller service menu.",
+            "Load the cabin with a known test weight (e.g. 50% rated load) and verify display matches.",
+            "Recalibrate the overload threshold in the controller to the rated capacity.",
+            "Inspect load cell wiring for moisture ingress or frayed cable at the junction box.",
+            "Replace load cell if span error exceeds ±5% after calibration attempt."
+          ],
+          "required_parts": [
+            "Load cell (OEM-matched, rated capacity + 25%)",
+            "Load cell amplifier module",
+            "Junction box terminal block",
+            "Shielded signal cable (4-core, 0.25 mm²)"
+          ]
+        },
+        {
+          "id": "false_overload_wiring",
+          "label": "Overload relay wiring fault causing false alarm",
+          "confidence": 0.58,
+          "fix_steps": [
+            "Measure the overload relay input signal voltage with the cabin empty.",
+            "Check terminal screw tightness and look for loose strands bridging adjacent terminals.",
+            "Inspect the overload relay module for visible damage, burn marks, or oxidised contacts.",
+            "Perform a relay bypass test to confirm the relay, not the sensor, is at fault.",
+            "Replace overload relay module if the sensor checks out but the relay still trips erroneously."
+          ],
+          "required_parts": [
+            "Overload relay module (OEM-compatible)",
+            "Terminal block (10-way, DIN rail)",
+            "Wire ferrules (1.0 mm², assorted)"
+          ]
+        }
+      ]
+    }
+  ]
+}

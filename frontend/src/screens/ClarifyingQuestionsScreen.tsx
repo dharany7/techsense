@@ -245,6 +245,8 @@ export default function ClarifyingQuestionsScreen() {
             state: {
               symptom,
               answers: newAnswers,
+              // Full question objects so the next screen can build Q&A records
+              questions,
               questionsAsked: questions.map((q) => q.questionText),
             },
           })

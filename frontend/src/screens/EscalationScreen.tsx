@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Clock, CheckCircle2,
+  Clock, CheckCircle2, Stethoscope,
   MessageSquareText, ListChecks, Target, StickyNote, User,
 } from 'lucide-react'
 import { diagnosticService } from '../services'
+import type { EscalationContext } from '../services'
 import type { EscalationBrief } from '../models'
 
 // ─── Router state ─────────────────────────────────────────────────────────────
@@ -14,6 +15,8 @@ interface LocationState {
   questionsAsked?: string[]
   topDiagnosis?: string
   confidenceScore?: number
+  /** Full DiagnosisResult object forwarded from DiagnosisResultsScreen */
+  topDiagnosisResult?: import('../models/types').DiagnosisResult
 }
 
 // ─── Expert name (hardcoded for mock) ────────────────────────────────────────
@@ -113,8 +116,27 @@ export default function EscalationScreen() {
 
   useEffect(() => {
     let cancelled = false
-    diagnosticService.generateEscalationBrief().then((b) => {
+
+    // Build context for the real service.
+    // topDiagnosisResult is the full DiagnosisResult forwarded by the results screen.
+    const topResult = state?.topDiagnosisResult
+
+    const ctx: EscalationContext = {
+      symptom: state?.symptom ?? '',
+      questionsAsked: state?.questionsAsked ?? [],
+      topDiagnosis: topResult ?? {
+        rank: 1,
+        causeTitle: state?.topDiagnosis ?? 'Unknown',
+        confidencePercent: state?.confidenceScore ?? 0,
+        fixSteps: [],
+        requiredParts: [],
+      },
+    }
+
+    diagnosticService.generateEscalationBrief(ctx).then((b) => {
       if (!cancelled) { setBrief(b); setFetchDone(true) }
+    }).catch(() => {
+      if (!cancelled) setFetchDone(true)
     })
     return () => { cancelled = true }
   }, [])

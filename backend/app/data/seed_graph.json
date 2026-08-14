@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    { "id": "wifi_disconnecting",  "metadata": { "label": "WiFi keeps disconnecting",         "type": "issue",    "tags": ["network", "wireless"] } },
+    { "id": "slow_performance",    "metadata": { "label": "Slow system performance",           "type": "issue",    "tags": ["performance"] } },
+    { "id": "blue_screen_error",   "metadata": { "label": "Blue Screen of Death (BSOD)",       "type": "issue",    "tags": ["crash", "windows"] } },
+    { "id": "battery_drain",       "metadata": { "label": "Fast battery drain",               "type": "issue",    "tags": ["battery", "laptop"] } },
+    { "id": "app_crashing",        "metadata": { "label": "Application keeps crashing",        "type": "issue",    "tags": ["software", "crash"] } },
+    { "id": "printer_not_found",   "metadata": { "label": "Printer not detected",             "type": "issue",    "tags": ["printer", "hardware"] } },
+    { "id": "audio_no_sound",      "metadata": { "label": "No sound / audio issues",          "type": "issue",    "tags": ["audio", "drivers"] } },
+
+    { "id": "restart_router",      "metadata": { "label": "Restart the router",               "type": "solution" } },
+    { "id": "driver_update",       "metadata": { "label": "Update device drivers",            "type": "solution" } },
+    { "id": "clear_cache",         "metadata": { "label": "Clear system / browser cache",     "type": "solution" } },
+    { "id": "check_power_settings","metadata": { "label": "Check power management settings",  "type": "solution" } },
+    { "id": "reinstall_app",       "metadata": { "label": "Reinstall the application",        "type": "solution" } },
+    { "id": "run_sfc",             "metadata": { "label": "Run System File Checker (sfc /scannow)", "type": "solution" } },
+    { "id": "add_printer_manual",  "metadata": { "label": "Add printer manually via Settings","type": "solution" } },
+    { "id": "set_default_audio",   "metadata": { "label": "Set correct default audio device", "type": "solution" } },
+
+    { "id": "windows_10",          "metadata": { "label": "Windows 10",                       "type": "os" } },
+    { "id": "windows_11",          "metadata": { "label": "Windows 11",                       "type": "os" } },
+    { "id": "macos_ventura",       "metadata": { "label": "macOS Ventura",                    "type": "os" } },
+
+    { "id": "error_0x0000007E",    "metadata": { "label": "BSOD 0x0000007E",                 "type": "error_code" } },
+    { "id": "error_0xC000021A",    "metadata": { "label": "BSOD 0xC000021A",                 "type": "error_code" } }
+  ],
+  "edges": [
+    { "source": "wifi_disconnecting", "target": "restart_router",     "relationship": "RESOLVES",    "weight": 0.9 },
+    { "source": "wifi_disconnecting", "target": "driver_update",      "relationship": "RESOLVES",    "weight": 0.8 },
+    { "source": "slow_performance",   "target": "clear_cache",        "relationship": "RESOLVES",    "weight": 0.85 },
+    { "source": "slow_performance",   "target": "check_power_settings","relationship": "RESOLVES",   "weight": 0.7 },
+    { "source": "blue_screen_error",  "target": "driver_update",      "relationship": "RESOLVES",    "weight": 0.9 },
+    { "source": "blue_screen_error",  "target": "run_sfc",            "relationship": "RESOLVES",    "weight": 0.85 },
+    { "source": "battery_drain",      "target": "check_power_settings","relationship": "RESOLVES",   "weight": 0.8 },
+    { "source": "app_crashing",       "target": "reinstall_app",      "relationship": "RESOLVES",    "weight": 0.9 },
+    { "source": "app_crashing",       "target": "driver_update",      "relationship": "RESOLVES",    "weight": 0.6 },
+    { "source": "printer_not_found",  "target": "add_printer_manual", "relationship": "RESOLVES",    "weight": 0.85 },
+    { "source": "printer_not_found",  "target": "driver_update",      "relationship": "RESOLVES",    "weight": 0.7 },
+    { "source": "audio_no_sound",     "target": "set_default_audio",  "relationship": "RESOLVES",    "weight": 0.9 },
+    { "source": "audio_no_sound",     "target": "driver_update",      "relationship": "RESOLVES",    "weight": 0.8 },
+
+    { "source": "blue_screen_error",  "target": "error_0x0000007E",   "relationship": "HAS_ERROR",   "weight": 1.0 },
+    { "source": "blue_screen_error",  "target": "error_0xC000021A",   "relationship": "HAS_ERROR",   "weight": 1.0 },
+
+    { "source": "wifi_disconnecting", "target": "slow_performance",   "relationship": "RELATED_TO",  "weight": 0.4 },
+    { "source": "app_crashing",       "target": "slow_performance",   "relationship": "RELATED_TO",  "weight": 0.5 }
+  ]
+}
